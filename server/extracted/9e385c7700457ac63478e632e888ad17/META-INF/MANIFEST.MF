@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Content-Package-Id: my_packages:ACM-pack
+Content-Package-Roots: /content/wknd/language-masters/en/magazine
+Content-Package-Type: content
+

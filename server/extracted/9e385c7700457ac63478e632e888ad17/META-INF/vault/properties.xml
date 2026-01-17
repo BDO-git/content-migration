@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>FileVault Package Properties</comment>
+<entry key="description"></entry>
+<entry key="generator">org.apache.jackrabbit.vault:3.8.4</entry>
+<entry key="packageType">content</entry>
+<entry key="lastWrappedBy">admin</entry>
+<entry key="packageFormatVersion">2</entry>
+<entry key="group">my_packages</entry>
+<entry key="created">2026-01-16T14:08:47.881Z</entry>
+<entry key="lastModifiedBy">admin</entry>
+<entry key="buildCount">1</entry>
+<entry key="lastWrapped">2026-01-16T14:08:47.842Z</entry>
+<entry key="version"></entry>
+<entry key="dependencies"></entry>
+<entry key="createdBy">admin</entry>
+<entry key="name">ACM-pack</entry>
+<entry key="lastModified">2026-01-16T14:08:47.842Z</entry>
+</properties>

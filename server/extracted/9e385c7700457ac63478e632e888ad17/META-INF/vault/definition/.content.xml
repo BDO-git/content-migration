@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:vlt="http://www.day.com/jcr/vault/1.0"
+    jcr:created="{Date}2026-01-16T14:08:47.842Z"
+    jcr:createdBy="admin"
+    jcr:description="\0"
+    jcr:lastModified="{Date}2026-01-16T14:08:47.842Z"
+    jcr:lastModifiedBy="admin"
+    jcr:primaryType="vlt:PackageDefinition"
+    buildCount="1"
+    builtWith="Adobe Experience Manager-2025.6.21193.20250609T124356Z"
+    group="my_packages"
+    lastUnwrapped="{Date}2026-01-16T14:08:47.842Z"
+    lastUnwrappedBy="admin"
+    lastWrapped="{Date}2026-01-16T14:08:47.842Z"
+    lastWrappedBy="admin"
+    name="ACM-pack"
+    version="\0">
+    <filter jcr:primaryType="nt:unstructured">
+        <f0
+            jcr:primaryType="nt:unstructured"
+            mode="replace"
+            propertyRules="[]"
+            root="/content/wknd/language-masters/en/magazine"
+            rules="[]"/>
+    </filter>
+</jcr:root>

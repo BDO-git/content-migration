@@ -1,0 +1,39 @@
+{
+  "targetComponents": [
+    {
+      "targetComponent": "dam/cfm/components/grid",
+      "properties": [
+        "cq:lastRolledout",
+        "cq:lastRolledoutBy",
+        "jcr:mixinTypes",
+        "jcr:primaryType",
+        "sling:resourceType"
+      ]
+    },
+    {
+      "targetComponent": "sling:redirect",
+      "properties": [
+        "jcr:mixinTypes",
+        "jcr:primaryType",
+        "sling:resourceType"
+      ]
+    },
+    {
+      "targetComponent": "wknd/components/container",
+      "properties": [
+        "cq:lastRolledout",
+        "cq:lastRolledoutBy",
+        "cq:styleIds",
+        "jcr:created",
+        "jcr:createdBy",
+        "jcr:lastModified",
+        "jcr:lastModifiedBy",
+        "jcr:mixinTypes",
+        "jcr:primaryType",
+        "jcr:title",
+        "sling:resourceType",
+        "type"
+      ]
+    }
+  ]
+}

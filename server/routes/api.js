@@ -9,6 +9,7 @@ const TreeService = require('../services/treeService');
 const TransformService = require('../services/transformService');
 const AnalysisService = require('../services/analysisService');
 const MigrationService = require('../services/migrationService');
+const AutoMapService = require('../services/autoMapService');
 
 // Setup Multer for uploads
 const upload = multer({ dest: path.join(__dirname, '../uploads/') });
@@ -21,6 +22,7 @@ const packageService = new PackageService(
 const treeService = new TreeService();
 const transformService = new TransformService();
 const analysisService = new AnalysisService();
+const autoMapService = new AutoMapService();
 
 // Routes
 
@@ -37,6 +39,29 @@ router.post('/upload', upload.single('package'), async (req, res) => {
 
         const result = await packageService.extractPackage(req.file.path, id);
         res.json({ success: true, daa: result });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 1.5 Auto Map
+router.post('/auto-map', upload.fields([
+    { name: 'templateList', maxCount: 1 },
+    { name: 'componentList', maxCount: 1 },
+    { name: 'analysisReport', maxCount: 1 }
+]), async (req, res) => {
+    try {
+        if (!req.files || !req.files.templateList || !req.files.componentList || !req.files.analysisReport) {
+            return res.status(400).json({ error: 'Missing required files' });
+        }
+
+        const result = await autoMapService.generateMappings(
+            req.files.templateList[0].path,
+            req.files.componentList[0].path,
+            req.files.analysisReport[0].path
+        );
+
+        res.json({ success: true, data: result });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

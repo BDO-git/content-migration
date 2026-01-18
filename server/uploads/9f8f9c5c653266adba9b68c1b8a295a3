@@ -1,0 +1,6 @@
+Source Path,Source Type,Resource Type,Template
+/content/wknd/en/home,page,wknd/components/page,/conf/wknd/settings/wcm/templates/content-page-template
+/content/wknd/en/home/jcr:content/root/container,container,wknd/components/container,
+/content/wknd/en/home/jcr:content/root/container/text,text,wknd/components/text,
+/content/wknd/en/home/jcr:content/root/container/image,image,wknd/components/image,
+/content/wknd/en/home/jcr:content/root/container/title,title,wknd/components/title,

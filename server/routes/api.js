@@ -46,23 +46,61 @@ router.post('/upload', upload.single('package'), async (req, res) => {
 
 // 1.5 Auto Map
 router.post('/auto-map', upload.fields([
-    { name: 'templateList', maxCount: 1 },
-    { name: 'componentList', maxCount: 1 },
+    { name: 'targetDefinitions', maxCount: 1 },
     { name: 'analysisReport', maxCount: 1 }
 ]), async (req, res) => {
     try {
-        if (!req.files || !req.files.templateList || !req.files.componentList || !req.files.analysisReport) {
-            return res.status(400).json({ error: 'Missing required files' });
+        const { uploadId } = req.body;
+        let analysisReportPath = null;
+
+        // Validations
+        if (!req.files || !req.files.targetDefinitions) {
+            // If manual upload, check files. If uploadId, we still need targetDefinitions file.
+            return res.status(400).json({ error: 'Target Definitions file is required' });
         }
 
+        const targetDefPath = req.files.targetDefinitions[0].path;
+
+        // Case A: Using Uploaded ID (Seamless Flow)
+        if (uploadId) {
+            console.log(`[AutoMap] Using UploadID: ${uploadId}`);
+            const expectedCsvPath = path.join(__dirname, '../../', `analysis_report_${uploadId}.csv`);
+
+            if (fs.existsSync(expectedCsvPath)) {
+                // Report already exists
+                analysisReportPath = expectedCsvPath;
+            } else {
+                // Need to generate report
+                console.log(`[AutoMap] Report not found for ${uploadId}, generating...`);
+                const extractionPath = path.join(__dirname, '../../extraction/', uploadId);
+                const jcrRoot = path.join(extractionPath, 'jcr_root');
+
+                if (!fs.existsSync(jcrRoot)) {
+                    return res.status(404).json({ error: 'Linked Source Package not found on server.' });
+                }
+
+                const tree = await treeService.buildTree(jcrRoot);
+                const analysis = analysisService.analyze(tree);
+                analysisReportPath = await analysisService.generateCSVReport(analysis, uploadId);
+            }
+
+        }
+        // Case B: Manual File Upload
+        else if (req.files.analysisReport) {
+            analysisReportPath = req.files.analysisReport[0].path;
+        } else {
+            return res.status(400).json({ error: 'Either Source Analysis file or Upload ID is required' });
+        }
+
+        console.log(`[AutoMap] Generating mappings using: ${analysisReportPath}`);
         const result = await autoMapService.generateMappings(
-            req.files.templateList[0].path,
-            req.files.componentList[0].path,
-            req.files.analysisReport[0].path
+            targetDefPath,
+            analysisReportPath
         );
 
         res.json({ success: true, data: result });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ success: false, error: error.message });
     }
 });

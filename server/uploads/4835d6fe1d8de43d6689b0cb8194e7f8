@@ -1,0 +1,10 @@
+{
+  "componentList": {
+    "targetComponents": [
+      {
+        "targetComponent": "/apps/target/components/logo",
+        "properties": ["logo", "alt"]
+      }
+    ]
+  }
+}

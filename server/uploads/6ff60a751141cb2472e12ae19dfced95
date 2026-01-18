@@ -1,0 +1,10 @@
+{
+  "componentList": {
+    "targetComponents": [
+      {
+        "targetComponent": "/apps/target/prop_delim",
+        "properties": ["title", "text", "link"]
+      }
+    ]
+  }
+}

@@ -1,5 +1,170 @@
 Server is running on port 3001
 [DEBUG] Extracting package...
-[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/1a7d43c68f08633e512f3ec995c0ff2a
-[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/1a7d43c68f08633e512f3ec995c0ff2a
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/1177b4f23b254e089ed10ffc014e7495
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/dummy_1177b4f23b254e089ed10ffc014e7495
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid or unsupported zip format. No END header found
+    at Object.INVALID_FORMAT (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at readMainHeader (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:123:49)
+    at new module.exports (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:21:9)
+    at new module.exports (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:67:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:31:25)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+    at done (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:59:7)
+    at indicateDone (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:63:68)
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/b950bcded23300607b442904cbc472a6
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/dummy_b950bcded23300607b442904cbc472a6
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid or unsupported zip format. No END header found
+    at Object.INVALID_FORMAT (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at readMainHeader (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:123:49)
+    at new module.exports (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:21:9)
+    at new module.exports (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:67:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:31:25)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+    at done (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:59:7)
+    at indicateDone (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:63:68)
+Writing template report to: /Users/anandagnihotri/Documents/application/ag-wrokspace/template_mapping_report.csv
+Writing component report to: /Users/anandagnihotri/Documents/application/ag-wrokspace/component_mapping_report.csv
+Reports written successfully.
+Writing template report to: /Users/anandagnihotri/Documents/application/ag-wrokspace/template_mapping_report.csv
+Writing component report to: /Users/anandagnihotri/Documents/application/ag-wrokspace/component_mapping_report.csv
+Reports written successfully.
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/b4ade6871a820b91eddbcfd5028363b3
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/acm_pack_b4ade6871a820b91eddbcfd5028363b3
+[DEBUG] Extracting using adm-zip...
 [DEBUG] Extraction complete.
+[DEBUG] Extracted 2 items to /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/acm_pack_b4ade6871a820b91eddbcfd5028363b3
+Writing template report to: /Users/anandagnihotri/Documents/application/ag-wrokspace/template_mapping_report.csv
+Writing component report to: /Users/anandagnihotri/Documents/application/ag-wrokspace/component_mapping_report.csv
+Reports written successfully.
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/13c29e477adbb2fcc087674a10a63551
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/source_package_13c29e477adbb2fcc087674a10a63551
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid or unsupported zip format. No END header found
+    at Object.INVALID_FORMAT (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at readMainHeader (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:123:49)
+    at new module.exports (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:21:9)
+    at new module.exports (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:67:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:31:25)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+    at done (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:59:7)
+    at indicateDone (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:63:68)
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/e3cc9892d7f341e9efdd4720616010ad
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/source_package_e3cc9892d7f341e9efdd4720616010ad
+[DEBUG] Extracting using adm-zip...
+[DEBUG] Extraction complete.
+Extraction error: Error: Extraction produced no files. The zip might be empty or corrupted.
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:41:23)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+    at done (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:59:7)
+    at indicateDone (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:63:68)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/lib/make-middleware.js:176:11
+    at WriteStream.<anonymous> (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/multer/storage/disk.js:43:9)
+    at WriteStream.emit (node:events:520:35)
+    at finish (node:internal/streams/writable:953:10)
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/a2d259cc6993145e52b9ac2e1f3bf763
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/source_package_a2d259cc6993145e52b9ac2e1f3bf763
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid CEN header (bad signature)
+    at Object.INVALID_CEN (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at Object.loadFromBinary (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/headers/entryHeader.js:247:36)
+    at set header (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipEntry.js:340:28)
+    at readEntries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:66:26)
+    at get entries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:145:17)
+    at Object.extractAllTo (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:756:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:32:17)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/65654957b6c36cb210b4ec8d6165b5aa
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/source_package_65654957b6c36cb210b4ec8d6165b5aa
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid CEN header (bad signature)
+    at Object.INVALID_CEN (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at Object.loadFromBinary (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/headers/entryHeader.js:247:36)
+    at set header (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipEntry.js:340:28)
+    at readEntries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:66:26)
+    at get entries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:145:17)
+    at Object.extractAllTo (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:756:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:32:17)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/ec9ff0f8c7cee3c8fd8f6fbe27a28026
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/source_package_ec9ff0f8c7cee3c8fd8f6fbe27a28026
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid CEN header (bad signature)
+    at Object.INVALID_CEN (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at Object.loadFromBinary (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/headers/entryHeader.js:247:36)
+    at set header (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipEntry.js:340:28)
+    at readEntries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:66:26)
+    at get entries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:145:17)
+    at Object.extractAllTo (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:756:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:32:17)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/9176db42ecced78ffe3b24c4a59e1cb1
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/source_package_9176db42ecced78ffe3b24c4a59e1cb1
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid CEN header (bad signature)
+    at Object.INVALID_CEN (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at Object.loadFromBinary (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/headers/entryHeader.js:247:36)
+    at set header (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipEntry.js:340:28)
+    at readEntries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:66:26)
+    at get entries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:145:17)
+    at Object.extractAllTo (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:756:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:32:17)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/b96e80cece27697d48029c0d3e1dcb11
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/source_package_b96e80cece27697d48029c0d3e1dcb11
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid CEN header (bad signature)
+    at Object.INVALID_CEN (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at Object.loadFromBinary (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/headers/entryHeader.js:247:36)
+    at set header (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipEntry.js:340:28)
+    at readEntries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:66:26)
+    at get entries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:145:17)
+    at Object.extractAllTo (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:756:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:32:17)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+[DEBUG] Extracting package...
+[DEBUG] Source File: /Users/anandagnihotri/Documents/application/ag-wrokspace/server/uploads/885280a39cf9336ad1e14607987ede5a
+[DEBUG] Target Dir: /Users/anandagnihotri/Documents/application/ag-wrokspace/extraction/source_package_885280a39cf9336ad1e14607987ede5a
+[DEBUG] Extracting using adm-zip...
+Extraction error: Error: ADM-ZIP: Invalid CEN header (bad signature)
+    at Object.INVALID_CEN (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/util/errors.js:56:16)
+    at Object.loadFromBinary (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/headers/entryHeader.js:247:36)
+    at set header (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipEntry.js:340:28)
+    at readEntries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:66:26)
+    at get entries (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/zipFile.js:145:17)
+    at Object.extractAllTo (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/adm-zip/adm-zip.js:756:18)
+    at PackageService.extractPackage (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/services/packageService.js:32:17)
+    at /Users/anandagnihotri/Documents/application/ag-wrokspace/server/routes/api.js:40:45
+    at Layer.handleRequest (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/anandagnihotri/Documents/application/ag-wrokspace/server/node_modules/router/lib/route.js:157:13)
+Writing template report to: /Users/anandagnihotri/Documents/application/ag-wrokspace/template_mapping_report.csv
+Writing component report to: /Users/anandagnihotri/Documents/application/ag-wrokspace/component_mapping_report.csv
+Reports written successfully.

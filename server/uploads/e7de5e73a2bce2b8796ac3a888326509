@@ -1,0 +1,3 @@
+Category,Item,Properties
+Template,/conf/source/landing-page-template,
+Component,/apps/source/text,"text;richText"

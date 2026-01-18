@@ -4,17 +4,23 @@ const path = require('path');
 class AutoMapService {
     constructor() { }
 
-    async generateMappings(templateListFile, componentListFile, analysisCsvFile) {
+    async generateMappings(targetDefinitionsFile, analysisCsvFile) {
         // 1. Parse Input Files
         const sourceData = await this.parseAnalysisCSV(analysisCsvFile);
-        const targetTemplates = await this.parseJSON(templateListFile); // { targetTemplates: [] }
-        const targetComponents = await this.parseJSON(componentListFile); // { targetComponents: [] }
+        const targetData = await this.parseJSON(targetDefinitionsFile); // { templatelist: {...}, componentlist: {...} }
+
+        // Extract lists from the new JSON structure
+        // Extract lists from the new JSON structure, handling both casing styles
+        const targetTemplates = (targetData.templatelist || targetData.templateList) ?
+            (targetData.templatelist || targetData.templateList).targetTemplates : [];
+        const targetComponents = (targetData.componentlist || targetData.componentList) ?
+            (targetData.componentlist || targetData.componentList).targetComponents : [];
 
         // 2. Match Templates
-        const templateMappings = this.matchTemplates(sourceData.templates, targetTemplates.targetTemplates);
+        const templateMappings = this.matchTemplates(sourceData.templates, targetTemplates);
 
         // 3. Match Components
-        const componentMappings = this.matchComponents(sourceData.components, targetComponents.targetComponents);
+        const componentMappings = this.matchComponents(sourceData.components, targetComponents);
 
         // 4. Generate Reports
         const reports = await this.generateReports(templateMappings, componentMappings);
@@ -39,43 +45,43 @@ class AutoMapService {
             const line = lines[i].trim();
             if (!line) continue;
 
-            // Simple CSV parse handling quotes
-            // Format: Category,Item,UsageCount,Properties
-            // Regex to match: (Category),("Item" or Item),(UsageCount),("Properties" or Properties)
             const parts = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
             if (!parts) continue;
 
-            // Clean quotes
-            const clean = (s) => s ? s.replace(/^"|"$/g, '') : '';
+            // Robust parsing
+            const firstComma = line.indexOf(',');
+            if (firstComma === -1) continue;
 
-            // Depending on how split works above, we might get fewer parts or complex logic.
-            // Let's rely on standard split if no commas in values, but properties has semicolons inside quotes.
-            // Re-doing simple parse logic for known structure:
-            // Template,"/path/to/tpl",,
-            // Component,"path/to/comp",10,"prop1; prop2"
+            const category = line.substring(0, firstComma);
+            // Remainder after Category,
+            const afterCategory = line.substring(firstComma + 1);
 
-            const category = line.split(',')[0];
-            const firstQuote = line.indexOf('"');
-            const secondQuote = line.indexOf('"', firstQuote + 1);
-
-            // If quoted item
             let item = '';
             let remainder = '';
 
-            if (firstQuote > -1 && firstQuote < 10) { // e.g. Component,"...
-                item = line.substring(firstQuote + 1, secondQuote);
-                remainder = line.substring(secondQuote + 2); // skip ",
+            if (afterCategory.trim().startsWith('"')) {
+                // Item is quoted
+                const openQuote = afterCategory.indexOf('"');
+                const closeQuote = afterCategory.indexOf('"', openQuote + 1);
+                if (closeQuote > -1) {
+                    item = afterCategory.substring(openQuote + 1, closeQuote);
+                    remainder = afterCategory.substring(closeQuote + 1); // ,Usage,"Props"
+                }
             } else {
-                const firstComma = line.indexOf(',');
-                const secondComma = line.indexOf(',', firstComma + 1);
-                item = line.substring(firstComma + 1, secondComma);
-                remainder = line.substring(secondComma + 1);
+                // Item is not quoted
+                const nextComma = afterCategory.indexOf(',');
+                if (nextComma > -1) {
+                    item = afterCategory.substring(0, nextComma);
+                    remainder = afterCategory.substring(nextComma);
+                } else {
+                    // unexpected end of line?
+                    item = afterCategory;
+                }
             }
 
             if (category === 'Template') {
                 templates.push(item);
             } else if (category === 'Component') {
-                // Parse properties from remainder: usageCount,"props"
                 const lastQuoteEnd = remainder.lastIndexOf('"');
                 const lastQuoteStart = remainder.lastIndexOf('"', lastQuoteEnd - 1);
 
@@ -102,6 +108,9 @@ class AutoMapService {
 
     // --- Matching Logic ---
 
+    // Threshold for accepting a match
+    matchThreshold = 60;
+
     matchTemplates(sourceTemplates, targetTemplates) {
         const results = [];
 
@@ -109,13 +118,10 @@ class AutoMapService {
             let bestMatch = null;
             let bestScore = -1;
 
-            if (targetTemplates) {
+            if (targetTemplates && Array.isArray(targetTemplates)) {
                 targetTemplates.forEach(target => {
-                    // Score based on name similarity key
-                    // target has targetTemplate1, targetTemplate2... dynamic keys?
-                    // User format: { "targetTemplate1": "/path", "pageProperties": ... }
-                    // We need to find the value that looks like a path
-                    const targetPath = Object.values(target).find(v => typeof v === 'string' && v.startsWith('/'));
+                    // target format: { "targetTemplate": "/path", "pageProperties": [...] }
+                    const targetPath = target.targetTemplate;
 
                     if (targetPath) {
                         const score = this.calculateScore(source, targetPath);
@@ -127,14 +133,17 @@ class AutoMapService {
                 });
             }
 
+            // Apply threshold
+            const finalMatch = (bestScore >= this.matchThreshold) ? bestMatch : 'no match found';
+
             results.push({
                 source: source,
-                target: bestMatch || '',
+                target: finalMatch,
                 score: bestScore,
                 mapping: {
                     sourceTemplate: source,
-                    targetTemplate: bestMatch || '',
-                    propertyMappings: {} // To assume defaults or empty
+                    targetTemplate: finalMatch === 'no match found' ? '' : finalMatch,
+                    propertyMappings: {}
                 }
             });
         });
@@ -146,24 +155,34 @@ class AutoMapService {
         const results = [];
 
         sourceComponents.forEach(source => {
+            // source is { path: "...", properties: [...] }
             let bestMatch = null;
             let bestScore = -1;
             let matchedTargetObj = null;
 
-            if (targetComponents) {
+            if (targetComponents && Array.isArray(targetComponents)) {
                 targetComponents.forEach(target => {
-                    // User format: { "targetComponent": "path", "properties": {} }
+                    // target format: { "targetComponent": "path", "properties": [...] }
                     const targetPath = target.targetComponent;
 
                     if (targetPath) {
-                        // 1. Name Score
+                        // 1. Name Score - prioritizing the component name (last part of path)
                         let score = this.calculateScore(source.path, targetPath);
 
-                        // 2. Property Overlap Bonus
-                        if (target.properties && source.properties) {
-                            const targetProps = Object.keys(target.properties);
-                            const overlap = source.properties.filter(p => targetProps.includes(p)).length;
-                            score += (overlap * 5); // Boost for property match
+                        // 2. Extra bonus for key component naming patterns (e.g., text, image, title)
+                        const sourceName = path.basename(source.path).toLowerCase().replace(/"/g, '');
+                        const targetName = path.basename(targetPath).toLowerCase();
+
+                        if (sourceName === targetName) {
+                            score += 20; // significant boost for exact name match
+                        }
+
+                        // 3. Property Overlap Bonus
+                        // target properties is now an array of strings like ["jcr:title", ...]
+                        if (target.properties && Array.isArray(target.properties) && source.properties) {
+                            const overlap = source.properties.filter(p => target.properties.includes(p)).length;
+                            // Small boost per property, capped
+                            score += Math.min(overlap * 2, 20);
                         }
 
                         if (score > bestScore) {
@@ -175,26 +194,24 @@ class AutoMapService {
                 });
             }
 
+            // Apply Threshold
+            const finalMatch = (bestScore >= this.matchThreshold) ? bestMatch : 'no match found';
+            const finalTargetObj = (bestScore >= this.matchThreshold) ? matchedTargetObj : null;
+
             // Auto-map properties if match found
-            const propMap = {};
-            if (matchedTargetObj && matchedTargetObj.properties) {
-                const targetProps = Object.keys(matchedTargetObj.properties);
-                source.properties.forEach(sp => {
-                    // Exact match?
-                    if (targetProps.includes(sp)) {
-                        propMap[sp] = sp;
-                    }
-                    // Fuzzy prop match could go here
-                });
+            let propMap = {};
+            if (finalTargetObj && finalTargetObj.properties) {
+                // Use fuzzy matching for properties
+                propMap = this.matchProperties(source.properties, finalTargetObj.properties);
             }
 
             results.push({
                 source: source.path,
-                target: bestMatch || '',
+                target: finalMatch,
                 score: bestScore,
                 mapping: {
                     sourceComponent: source.path,
-                    targetComponent: bestMatch || '',
+                    targetComponent: finalMatch === 'no match found' ? '' : finalMatch,
                     propertyMappings: propMap
                 }
             });
@@ -203,23 +220,75 @@ class AutoMapService {
         return results;
     }
 
+    matchProperties(sourceProps, targetProps) {
+        const mapping = {};
+
+        sourceProps.forEach(sourceProp => {
+            let bestPropMatch = null;
+            let bestPropScore = -1;
+
+            targetProps.forEach(targetProp => {
+                let score = 0;
+
+                // 1. Exact Match
+                if (sourceProp === targetProp) {
+                    score = 100;
+                }
+                // 2. Case-insensitive Match
+                else if (sourceProp.toLowerCase() === targetProp.toLowerCase()) {
+                    score = 90;
+                }
+                // 3. Contains Match (e.g. sitelogo -> logo)
+                else if (sourceProp.toLowerCase().includes(targetProp.toLowerCase()) ||
+                    targetProp.toLowerCase().includes(sourceProp.toLowerCase())) {
+                    score = 70;
+                }
+                // 4. Levenshtein for typos
+                else {
+                    const distance = this.levenshtein(sourceProp.toLowerCase(), targetProp.toLowerCase());
+                    const maxLen = Math.max(sourceProp.length, targetProp.length);
+                    const fuzzyScore = (1 - distance / maxLen) * 60;
+                    score = fuzzyScore;
+                }
+
+                if (score > bestPropScore) {
+                    bestPropScore = score;
+                    bestPropMatch = targetProp;
+                }
+            });
+
+            // Threshold for property mapping (slightly looser than components to be helpful)
+            if (bestPropScore >= 50) {
+                mapping[sourceProp] = bestPropMatch;
+            }
+        });
+
+        return mapping;
+    }
+
     calculateScore(str1, str2) {
-        // Similarity score (0-100) based on simple token matching or Levenshtein
-        // Using simplified token overlap for paths
+        // Similarity score (0-100)
 
-        // Normalize
-        const clean1 = path.basename(str1).toLowerCase();
-        const clean2 = path.basename(str2).toLowerCase();
+        // Clean and normalize strings (remove quotes, lowercase)
+        const clean1 = str1.replace(/"/g, '').toLowerCase();
+        const clean2 = str2.replace(/"/g, '').toLowerCase();
 
-        if (clean1 === clean2) return 100;
-        if (clean2.includes(clean1) || clean1.includes(clean2)) return 80;
+        const base1 = path.basename(clean1);
+        const base2 = path.basename(clean2);
 
-        // Levenshtein-ish simple
-        const distance = this.levenshtein(clean1, clean2);
-        const maxLen = Math.max(clean1.length, clean2.length);
+        // 1. Exact Name Match (Highest Priority)
+        if (base1 === base2) return 90;
+
+        // 2. Contains Match
+        if (base2.includes(base1) || base1.includes(base2)) return 70;
+
+        // 3. Levenshtein Distance for close matches
+        const distance = this.levenshtein(base1, base2);
+        const maxLen = Math.max(base1.length, base2.length);
         if (maxLen === 0) return 0;
 
-        return (1 - distance / maxLen) * 100;
+        // Return normalized score
+        return (1 - distance / maxLen) * 60; // Max 60 for fuzzy match
     }
 
     levenshtein(a, b) {
@@ -262,7 +331,11 @@ class AutoMapService {
         // Comp Report
         let compCsv = `Source Component,Best Match Target,Score,Mapped Properties\n`;
         componentMappings.forEach(m => {
-            const props = Object.keys(m.mapping.propertyMappings).join(';');
+            // Format props as "sourceProp=targetProp;source2=target2"
+            const props = Object.entries(m.mapping.propertyMappings)
+                .map(([source, target]) => `${source}=${target}`)
+                .join(';');
+
             compCsv += `"${m.source}","${m.target}",${m.score.toFixed(2)},"${props}"\n`;
         });
 
@@ -270,8 +343,11 @@ class AutoMapService {
         const tplPath = path.join(rootDir, 'template_mapping_report.csv');
         const compPath = path.join(rootDir, 'component_mapping_report.csv');
 
+        console.log(`Writing template report to: ${tplPath}`);
+        console.log(`Writing component report to: ${compPath}`);
         await fs.promises.writeFile(tplPath, tplCsv);
         await fs.promises.writeFile(compPath, compCsv);
+        console.log("Reports written successfully.");
 
         return {
             templateReport: tplPath,

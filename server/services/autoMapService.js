@@ -80,7 +80,19 @@ class AutoMapService {
             }
 
             if (category === 'Template') {
-                templates.push(item);
+                const lastQuoteEnd = remainder.lastIndexOf('"');
+                const lastQuoteStart = remainder.lastIndexOf('"', lastQuoteEnd - 1);
+
+                let properties = [];
+                if (lastQuoteStart > -1) {
+                    const propsStr = remainder.substring(lastQuoteStart + 1, lastQuoteEnd);
+                    properties = propsStr.split(';').map(p => p.trim());
+                }
+
+                templates.push({
+                    path: item,
+                    properties: properties
+                });
             } else if (category === 'Component') {
                 const lastQuoteEnd = remainder.lastIndexOf('"');
                 const lastQuoteStart = remainder.lastIndexOf('"', lastQuoteEnd - 1);
@@ -124,7 +136,7 @@ class AutoMapService {
                     const targetPath = target.targetTemplate;
 
                     if (targetPath) {
-                        const score = this.calculateScore(source, targetPath);
+                        const score = this.calculateScore(source.path, targetPath);
                         if (score > bestScore) {
                             bestScore = score;
                             bestMatch = targetPath;
@@ -136,14 +148,25 @@ class AutoMapService {
             // Apply threshold
             const finalMatch = (bestScore >= this.matchThreshold) ? bestMatch : 'no match found';
 
+            // Auto-map properties if match found
+            let propMap = {};
+            if (finalMatch !== 'no match found' && targetTemplates) {
+                // Find the target object again to get its properties
+                // This is slightly inefficient but safe. 
+                const targetObj = targetTemplates.find(t => t.targetTemplate === finalMatch);
+                if (targetObj && targetObj.pageProperties) {
+                    propMap = this.matchProperties(source.properties, targetObj.pageProperties);
+                }
+            }
+
             results.push({
-                source: source,
+                source: source.path,
                 target: finalMatch,
                 score: bestScore,
                 mapping: {
-                    sourceTemplate: source,
+                    sourceTemplate: source.path,
                     targetTemplate: finalMatch === 'no match found' ? '' : finalMatch,
-                    propertyMappings: {}
+                    propertyMappings: propMap
                 }
             });
         });
@@ -320,38 +343,36 @@ class AutoMapService {
     }
 
     async generateReports(templateMappings, componentMappings) {
-        // Generate CSVs
+        // Generate Single Consolidated CSV
+        let csvContent = `Type,Source,Target,Properties\n`;
 
-        // TPL Report
-        let tplCsv = `Source Template,Best Match Target,Score\n`;
+        // Templates
         templateMappings.forEach(m => {
-            tplCsv += `"${m.source}","${m.target}",${m.score.toFixed(2)}\n`;
+            const props = Object.entries(m.mapping.propertyMappings)
+                .map(([source, target]) => `${source}=${target}`)
+                .join(';');
+            csvContent += `Template,"${m.source}","${m.target}","${props}"\n`;
         });
 
-        // Comp Report
-        let compCsv = `Source Component,Best Match Target,Score,Mapped Properties\n`;
+        // Components
         componentMappings.forEach(m => {
             // Format props as "sourceProp=targetProp;source2=target2"
             const props = Object.entries(m.mapping.propertyMappings)
                 .map(([source, target]) => `${source}=${target}`)
                 .join(';');
 
-            compCsv += `"${m.source}","${m.target}",${m.score.toFixed(2)},"${props}"\n`;
+            csvContent += `Component,"${m.source}","${m.target}","${props}"\n`;
         });
 
         const rootDir = path.join(__dirname, '../../');
-        const tplPath = path.join(rootDir, 'template_mapping_report.csv');
-        const compPath = path.join(rootDir, 'component_mapping_report.csv');
+        const reportPath = path.join(rootDir, 'mapping_report.csv');
 
-        console.log(`Writing template report to: ${tplPath}`);
-        console.log(`Writing component report to: ${compPath}`);
-        await fs.promises.writeFile(tplPath, tplCsv);
-        await fs.promises.writeFile(compPath, compCsv);
-        console.log("Reports written successfully.");
+        console.log(`Writing consolidated mapping report to: ${reportPath}`);
+        await fs.promises.writeFile(reportPath, csvContent);
+        console.log("Report written successfully.");
 
         return {
-            templateReport: tplPath,
-            componentReport: compPath
+            mappingReport: reportPath
         };
     }
 }

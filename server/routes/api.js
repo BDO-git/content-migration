@@ -140,10 +140,10 @@ router.get('/analyze/:id', async (req, res) => {
         const analysis = analysisService.analyze(tree);
 
         // Generate Report Files
-        const reportPath = await analysisService.generateMarkdownReport(analysis, req.params.id);
+        // const reportPath = await analysisService.generateMarkdownReport(analysis, req.params.id);
         const csvPath = await analysisService.generateCSVReport(analysis, req.params.id);
 
-        res.json({ success: true, analysis, reportPath, csvPath });
+        res.json({ success: true, analysis, csvPath });
 
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
@@ -151,48 +151,31 @@ router.get('/analyze/:id', async (req, res) => {
 });
 
 // 3. Run Migration (Preview/DryRun or Real)
-router.post('/migrate', async (req, res) => {
-    const {
-        uploadId,
-        sourceRoot, // e.g. /content/oldsite
-        targetUrl,
-        username,
-        password,
-        targetRoot, // e.g. /content/newsite
-        templateMappings,
-        componentMappings,
-        dryRun
-    } = req.body;
+const migrationService = require('../services/migrationService');
 
-    if (!uploadId || !targetUrl || !targetRoot) {
-        return res.status(400).json({ error: 'Missing required configuration' });
-    }
-
+// 3. Run Migration
+router.post('/migrate', upload.single('mappingReport'), async (req, res) => {
     try {
-        const extractionPath = path.join(__dirname, '../../extraction/', uploadId);
-        const jcrRoot = path.join(extractionPath, 'jcr_root');
+        if (!req.file) {
+            return res.status(400).json({ success: false, error: 'Mapping Report file is required' });
+        }
 
-        // 1. Build Tree
-        const rawTree = await treeService.buildTree(jcrRoot);
+        const mappingReportPath = req.file.path;
 
-        // 2. Transform Tree
-        const transformConfig = {
-            sourceRoot,
-            targetRoot,
-            templateMappings,
-            componentMappings
-        };
-        const transformedTree = transformService.transformTree(rawTree, transformConfig);
+        // When using FormData, objects come as JSON strings
+        const targetConfig = JSON.parse(req.body.targetConfig);
+        const uploadId = req.body.uploadId;
 
-        // 3. Migrate
-        const migrationService = new MigrationService(targetUrl, { username, password });
-        const report = await migrationService.migrate(transformedTree, dryRun);
+        const results = await migrationService.migrate(uploadId, mappingReportPath, targetConfig);
 
-        res.json({ success: true, report });
+        res.json({ success: true, results });
 
     } catch (error) {
+        console.error("Migration failed:", error);
         res.status(500).json({ success: false, error: error.message });
     }
 });
+
+
 
 module.exports = router;

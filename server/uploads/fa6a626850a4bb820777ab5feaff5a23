@@ -1,0 +1,15 @@
+Category,Item,UsageCount,Properties
+Template,"/conf/wknd/settings/wcm/templates/article-page-template",,
+Template,"/conf/wknd/settings/wcm/templates/content-page-template",,
+Component,"dam/cfm/components/grid",8,"cq:lastRolledout; cq:lastRolledoutBy; jcr:mixinTypes; jcr:primaryType; sling:resourceType"
+Component,"sling:redirect",1,"jcr:mixinTypes; jcr:primaryType; sling:resourceType; sling:target; xmlns:jcr; xmlns:rep; xmlns:sling"
+Component,"wknd/components/container",10,"cq:lastRolledout; cq:lastRolledoutBy; cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; layout; sling:resourceType"
+Component,"wknd/components/contentfragment",2,"cq:lastRolledout; cq:lastRolledoutBy; displayMode; elementNames; fragmentPath; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; sling:resourceType; text; variationName"
+Component,"wknd/components/experiencefragment",2,"cq:lastRolledout; cq:lastRolledoutBy; fragmentVariationPath; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; sling:resourceType"
+Component,"wknd/components/image",9,"cq:lastRolledout; cq:lastRolledoutBy; fileReference; imageCrop; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; sling:resourceType"
+Component,"wknd/components/image-list",1,"childDepth; cq:lastRolledout; cq:lastRolledoutBy; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; listFrom; sling:resourceType; sortOrder; tagsMatch"
+Component,"wknd/components/list",2,"childDepth; cq:lastRolledout; cq:lastRolledoutBy; cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; linkItems; listFrom; maxItems; orderBy; parentPage; showDescription; showModificationDate; sling:resourceType; sortOrder; tagsMatch"
+Component,"wknd/components/page",3,"cq:lastModified; cq:lastModifiedBy; cq:lastRolledout; cq:lastRolledoutBy; cq:tags; cq:template; jcr:description; jcr:isCheckedOut; jcr:mixinTypes; jcr:primaryType; jcr:title; jcr:uuid; sling:resourceType; socialMedia"
+Component,"wknd/components/sharing",2,"cq:lastRolledout; cq:lastRolledoutBy; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; sling:resourceType"
+Component,"wknd/components/text",1,"cq:lastRolledout; cq:lastRolledoutBy; cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; sling:resourceType; text; textIsRich"
+Component,"wknd/components/title",9,"cq:lastRolledout; cq:lastRolledoutBy; cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:mixinTypes; jcr:primaryType; jcr:title; sling:resourceType; type"

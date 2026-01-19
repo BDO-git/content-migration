@@ -1,0 +1,16 @@
+{
+    "targetTemplates": [
+        {
+            "targetTemplate1": "/conf/wknd/settings/wcm/templates/landing-page-template",
+            "pageProperties": {
+                "jcr:title": "Landing Page"
+            }
+        },
+        {
+            "targetTemplate2": "/conf/wknd/settings/wcm/templates/article-page-template",
+            "pageProperties": {
+                "jcr:title": "Article Page"
+            }
+        }
+    ]
+}

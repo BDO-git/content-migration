@@ -11,7 +11,7 @@ class AnalysisService {
      */
     analyze(rootNode) {
         const report = {
-            templates: new Set(),
+            templates: {}, // Map<templatePath, { count: number, properties: Set<string> }>
             components: {} // Map<resourceType, { count: number, properties: Set<string> }>
         };
 
@@ -24,9 +24,17 @@ class AnalysisService {
         if (!node) return;
 
         // 1. Check for Template
-        // Templates are usually defined on cq:PageContent nodes via cq:template property
         if (node.properties && node.properties['cq:template']) {
-            report.templates.add(node.properties['cq:template']);
+            const tpl = node.properties['cq:template'];
+            if (!report.templates[tpl]) {
+                report.templates[tpl] = { count: 0, properties: new Set() };
+            }
+            report.templates[tpl].count++;
+
+            // Collect properties for this template usage
+            Object.keys(node.properties).forEach(prop => {
+                report.templates[tpl].properties.add(prop);
+            });
         }
 
         // 2. Check for Component
@@ -71,9 +79,19 @@ class AnalysisService {
 
     formatReport(report) {
         const formatted = {
-            templates: Array.from(report.templates).sort(),
+            templates: [],
             components: []
         };
+
+        // Convert templates map to array
+        Object.keys(report.templates).sort().forEach(tpl => {
+            const data = report.templates[tpl];
+            formatted.templates.push({
+                template: tpl,
+                count: data.count,
+                properties: Array.from(data.properties).sort()
+            });
+        });
 
         // Convert components map to array
         Object.keys(report.components).sort().forEach(rt => {
@@ -134,7 +152,8 @@ class AnalysisService {
         // Templates
         if (analysisData.templates.length > 0) {
             analysisData.templates.forEach(t => {
-                csv += `Template,"${t}",,\n`;
+                const props = t.properties ? t.properties.join('; ') : '';
+                csv += `Template,"${t.template}",${t.count},"${props}"\n`;
             });
         }
 

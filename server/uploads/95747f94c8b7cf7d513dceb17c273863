@@ -1,0 +1,183 @@
+{
+  "templateList": {
+    "targetTemplates": [
+      {
+        "targetTemplate": "/conf/wknd/settings/wcm/templates/landing-page-template",
+        "pageProperties": [
+          "jcr:title",
+          "subtitle"
+        ]
+      },
+      {
+        "targetTemplate": "/conf/wknd/settings/wcm/templates/content-page-template",
+        "pageProperties": [
+          "jcr:title",
+          "subtitle1"
+        ]
+      }
+    ]
+  },
+  "componentList": {
+    "targetComponents": [
+      {
+        "targetComponent": "core/wcm/components/container/v1/container",
+        "properties": [
+          "cq:styleIds",
+          "layout",
+          "backgroundImage",
+          "jcr:primaryType",
+          "jcr:mixinTypes",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/text/v2/text",
+        "properties": [
+          "text",
+          "textIsRich",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/title/v2/title",
+        "properties": [
+          "jcr:title",
+          "type",
+          "linkURL",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/image/v2/image",
+        "properties": [
+          "fileReference",
+          "alt",
+          "title",
+          "linkURL",
+          "displayPopupTitle",
+          "lazyEnabled",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/button/v1/button",
+        "properties": [
+          "text",
+          "link",
+          "icon",
+          "accessibilityLabel",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/list/v2/list",
+        "properties": [
+          "listFrom",
+          "pages",
+          "tags",
+          "orderBy",
+          "sortOrder",
+          "maxItems",
+          "showDescription",
+          "showModificationDate",
+          "linkItems",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/teaser/v1/teaser",
+        "properties": [
+          "pretitle",
+          "title",
+          "description",
+          "fileReference",
+          "linkURL",
+          "actionsEnabled",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/carousel/v1/carousel",
+        "properties": [
+          "autoplay",
+          "delay",
+          "loop",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/tabs/v1/tabs",
+        "properties": [
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/accordion/v1/accordion",
+        "properties": [
+          "singleExpansion",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/download/v1/download",
+        "properties": [
+          "fileReference",
+          "title",
+          "description",
+          "displayFilename",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/embed/v1/embed",
+        "properties": [
+          "type",
+          "url",
+          "html",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/separator/v1/separator",
+        "properties": [
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      },
+      {
+        "targetComponent": "core/wcm/components/progressbar/v1/progressbar",
+        "properties": [
+          "min",
+          "max",
+          "value",
+          "id",
+          "jcr:primaryType",
+          "sling:resourceType"
+        ]
+      }
+    ]
+  }
+}

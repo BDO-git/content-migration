@@ -1,0 +1,11 @@
+{
+    "targetComponents": [
+        {
+            "targetComponent": "core/wcm/components/text/v2/text",
+            "properties": {
+                "text": "",
+                "textIsRich": ""
+            }
+        }
+    ]
+}

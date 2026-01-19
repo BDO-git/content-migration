@@ -9,6 +9,7 @@ const TreeService = require('../services/treeService');
 const TransformService = require('../services/transformService');
 const AnalysisService = require('../services/analysisService');
 const MigrationService = require('../services/migrationService');
+const AutoMapService = require('../services/autoMapService');
 
 // Setup Multer for uploads
 const upload = multer({ dest: path.join(__dirname, '../uploads/') });
@@ -21,6 +22,7 @@ const packageService = new PackageService(
 const treeService = new TreeService();
 const transformService = new TransformService();
 const analysisService = new AnalysisService();
+const autoMapService = new AutoMapService();
 
 // Routes
 
@@ -38,6 +40,67 @@ router.post('/upload', upload.single('package'), async (req, res) => {
         const result = await packageService.extractPackage(req.file.path, id);
         res.json({ success: true, daa: result });
     } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// 1.5 Auto Map
+router.post('/auto-map', upload.fields([
+    { name: 'targetDefinitions', maxCount: 1 },
+    { name: 'analysisReport', maxCount: 1 }
+]), async (req, res) => {
+    try {
+        const { uploadId } = req.body;
+        let analysisReportPath = null;
+
+        // Validations
+        if (!req.files || !req.files.targetDefinitions) {
+            // If manual upload, check files. If uploadId, we still need targetDefinitions file.
+            return res.status(400).json({ error: 'Target Definitions file is required' });
+        }
+
+        const targetDefPath = req.files.targetDefinitions[0].path;
+
+        // Case A: Using Uploaded ID (Seamless Flow)
+        if (uploadId) {
+            console.log(`[AutoMap] Using UploadID: ${uploadId}`);
+            const expectedCsvPath = path.join(__dirname, '../../', `analysis_report_${uploadId}.csv`);
+
+            if (fs.existsSync(expectedCsvPath)) {
+                // Report already exists
+                analysisReportPath = expectedCsvPath;
+            } else {
+                // Need to generate report
+                console.log(`[AutoMap] Report not found for ${uploadId}, generating...`);
+                const extractionPath = path.join(__dirname, '../../extraction/', uploadId);
+                const jcrRoot = path.join(extractionPath, 'jcr_root');
+
+                if (!fs.existsSync(jcrRoot)) {
+                    return res.status(404).json({ error: 'Linked Source Package not found on server.' });
+                }
+
+                const tree = await treeService.buildTree(jcrRoot);
+                const analysis = analysisService.analyze(tree);
+                analysisReportPath = await analysisService.generateCSVReport(analysis, uploadId);
+            }
+
+        }
+        // Case B: Manual File Upload
+        else if (req.files.analysisReport) {
+            analysisReportPath = req.files.analysisReport[0].path;
+        } else {
+            return res.status(400).json({ error: 'Either Source Analysis file or Upload ID is required' });
+        }
+
+        console.log(`[AutoMap] Generating mappings using: ${analysisReportPath}`);
+        const result = await autoMapService.generateMappings(
+            targetDefPath,
+            analysisReportPath
+        );
+
+        res.json({ success: true, data: result });
+    } catch (error) {
+        console.error(error);
         res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -77,10 +140,10 @@ router.get('/analyze/:id', async (req, res) => {
         const analysis = analysisService.analyze(tree);
 
         // Generate Report Files
-        const reportPath = await analysisService.generateMarkdownReport(analysis, req.params.id);
+        // const reportPath = await analysisService.generateMarkdownReport(analysis, req.params.id);
         const csvPath = await analysisService.generateCSVReport(analysis, req.params.id);
 
-        res.json({ success: true, analysis, reportPath, csvPath });
+        res.json({ success: true, analysis, csvPath });
 
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
@@ -88,48 +151,31 @@ router.get('/analyze/:id', async (req, res) => {
 });
 
 // 3. Run Migration (Preview/DryRun or Real)
-router.post('/migrate', async (req, res) => {
-    const {
-        uploadId,
-        sourceRoot, // e.g. /content/oldsite
-        targetUrl,
-        username,
-        password,
-        targetRoot, // e.g. /content/newsite
-        templateMappings,
-        componentMappings,
-        dryRun
-    } = req.body;
+const migrationService = require('../services/migrationService');
 
-    if (!uploadId || !targetUrl || !targetRoot) {
-        return res.status(400).json({ error: 'Missing required configuration' });
-    }
-
+// 3. Run Migration
+router.post('/migrate', upload.single('mappingReport'), async (req, res) => {
     try {
-        const extractionPath = path.join(__dirname, '../../extraction/', uploadId);
-        const jcrRoot = path.join(extractionPath, 'jcr_root');
+        if (!req.file) {
+            return res.status(400).json({ success: false, error: 'Mapping Report file is required' });
+        }
 
-        // 1. Build Tree
-        const rawTree = await treeService.buildTree(jcrRoot);
+        const mappingReportPath = req.file.path;
 
-        // 2. Transform Tree
-        const transformConfig = {
-            sourceRoot,
-            targetRoot,
-            templateMappings,
-            componentMappings
-        };
-        const transformedTree = transformService.transformTree(rawTree, transformConfig);
+        // When using FormData, objects come as JSON strings
+        const targetConfig = JSON.parse(req.body.targetConfig);
+        const uploadId = req.body.uploadId;
 
-        // 3. Migrate
-        const migrationService = new MigrationService(targetUrl, { username, password });
-        const report = await migrationService.migrate(transformedTree, dryRun);
+        const results = await migrationService.migrate(uploadId, mappingReportPath, targetConfig);
 
-        res.json({ success: true, report });
+        res.json({ success: true, results });
 
     } catch (error) {
+        console.error("Migration failed:", error);
         res.status(500).json({ success: false, error: error.message });
     }
 });
+
+
 
 module.exports = router;

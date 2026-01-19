@@ -1,0 +1,19 @@
+Category,Item,UsageCount,Properties
+Template,"/conf/wknd/settings/wcm/templates/article-page-template",,
+Template,"/conf/wknd/settings/wcm/templates/content-page-template",,
+Template,"/conf/wknd/settings/wcm/templates/landing-page-template",,
+Component,"dam/cfm/components/grid",28,"jcr:primaryType; sling:resourceType"
+Component,"sling:redirect",1,"jcr:mixinTypes; jcr:primaryType; sling:resourceType; sling:target; xmlns:jcr; xmlns:rep; xmlns:sling"
+Component,"wknd/components/container",32,"cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; layout; sling:resourceType"
+Component,"wknd/components/contentfragment",7,"cq:styleIds; displayMode; elementNames; fragmentPath; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; paragraphScope; sling:resourceType; text; variationName"
+Component,"wknd/components/download",2,"actionText; descriptionFromAsset; fileReference; inline; jcr:created; jcr:createdBy; jcr:description; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; jcr:title; sling:resourceType; textIsRich; titleFromAsset"
+Component,"wknd/components/experiencefragment",7,"fragmentVariationPath; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; sling:resourceType"
+Component,"wknd/components/image",30,"altValueFromDAM; displayPopupTitle; fileReference; imageCrop; isDecorative; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; jcr:title; sling:resourceType; titleValueFromDAM"
+Component,"wknd/components/image-list",2,"childDepth; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; listFrom; orderBy; sling:resourceType; sortOrder; tagsMatch"
+Component,"wknd/components/list",7,"childDepth; cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; linkItems; listFrom; maxItems; orderBy; parentPage; showDescription; showModificationDate; sling:resourceType; sortOrder; tagsMatch"
+Component,"wknd/components/page",9,"cq:lastModified; cq:lastModifiedBy; cq:lastReplicated; cq:lastReplicatedBy; cq:lastReplicationAction; cq:tags; cq:template; jcr:description; jcr:isCheckedOut; jcr:mixinTypes; jcr:primaryType; jcr:title; jcr:uuid; shortDescription; sling:resourceType; socialMedia"
+Component,"wknd/components/separator",4,"cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; sling:resourceType"
+Component,"wknd/components/sharing",7,"jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; sling:resourceType"
+Component,"wknd/components/teaser",3,"actionsEnabled; cq:styleIds; descriptionFromPage; fileReference; id; jcr:created; jcr:createdBy; jcr:description; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; jcr:title; pretitle; sling:resourceType; textIsRich; titleFromPage"
+Component,"wknd/components/text",6,"cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; sling:resourceType; text; textIsRich"
+Component,"wknd/components/title",36,"cq:styleIds; jcr:created; jcr:createdBy; jcr:lastModified; jcr:lastModifiedBy; jcr:primaryType; jcr:title; sling:resourceType; type"

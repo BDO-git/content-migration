@@ -1,0 +1,21 @@
+{
+  "templatelist": {
+    "targetTemplates": [
+      {
+        "targetTemplate": "/conf/target/landing-page-template",
+        "pageProperties": []
+      }
+    ]
+  },
+  "componentlist": {
+    "targetComponents": [
+      {
+        "targetComponent": "core/wcm/components/text",
+        "properties": [
+          "text",
+          "richText"
+        ]
+      }
+    ]
+  }
+}

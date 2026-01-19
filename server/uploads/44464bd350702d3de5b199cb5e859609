@@ -1,0 +1,10 @@
+{
+    "targetTemplates": [
+        {
+            "targetTemplate1": "/conf/wknd/settings/wcm/templates/landing-page-template",
+            "pageProperties": {
+                "jcr:title": "Landing Page"
+            }
+        }
+    ]
+}

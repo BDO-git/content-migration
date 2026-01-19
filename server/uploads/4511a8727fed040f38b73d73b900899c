@@ -1,0 +1,18 @@
+{
+    "targetComponents": [
+        {
+            "targetComponent": "core/wcm/components/text/v2/text",
+            "properties": {
+                "text": "",
+                "textIsRich": ""
+            }
+        },
+        {
+            "targetComponent": "core/wcm/components/title/v2/title",
+            "properties": {
+                "jcr:title": "",
+                "type": ""
+            }
+        }
+    ]
+}

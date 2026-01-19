@@ -1,0 +1,4 @@
+Type,Source,Target,Properties
+Template,"/conf/test/template","/conf/target/template",""
+Component,"test/components/page","target/components/page",""
+Component,"test/components/image","target/components/image","altText=alt"
